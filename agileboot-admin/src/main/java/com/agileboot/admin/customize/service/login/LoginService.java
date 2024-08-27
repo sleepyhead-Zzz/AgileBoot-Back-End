@@ -80,11 +80,11 @@ public class LoginService {
         }
         // 用户验证
         Authentication authentication;
-        String decryptPassword = decryptPassword(loginCommand.getPassword());
+//        String decryptPassword = decryptPassword(loginCommand.getPassword());
         try {
             // 该方法会去调用UserDetailsServiceImpl#loadUserByUsername  校验用户名和密码  认证鉴权
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginCommand.getUsername(), decryptPassword));
+                loginCommand.getUsername(), loginCommand.getPassword()));
         } catch (BadCredentialsException e) {
             ThreadPoolManager.execute(AsyncTaskFactory.loginInfoTask(loginCommand.getUsername(), LoginStatusEnum.LOGIN_FAIL,
                 MessageUtils.message("Business.LOGIN_WRONG_USER_PASSWORD")));
